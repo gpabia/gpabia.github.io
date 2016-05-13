@@ -51,7 +51,10 @@
 		}
 
 		.form-control{
-			width: 10%;
+			width: 200%;
+		}
+		.btn-default2{
+			width: 500%;
 		}
   </style>
 
@@ -105,7 +108,7 @@
                 <div class="input-group">
                   <input id="custom-video-id" type="text" class="form-control" placeholder="Video ID...">
                   <span class="input-group-btn">
-                    <button id="custom-video-btn" class="btn btn-default" type="button">Go</button>
+                    <button id="custom-video-btn" class="btn btn-default2" type="button">Go</button>
                   </span>
                 </div>
               </li>
@@ -120,15 +123,18 @@
                 <div class="input-group">
 									<input id="custom-chat-id" type="text" class="form-control" placeholder="Channel name">
                   <span class="input-group-btn">
-                    <button id="custom-chat-btn" class="btn btn-default" type="button">Go</button>
+                    
                   </span>
+
                 </div>
+																		 <button id="custom-add-chat-btn" class="btn btn-default" type="button">Add</button>
+																		 <button id="custom-chat-btn" class="btn btn-default" type="button">Go</button>
               </li>
             </ul>
           </li>
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                Dota Known Chat Channel<span class="caret"></span>
+                Dota Known Chat ChannEEEel<span class="caret"></span>
             </a>
             <ul id="chatList" class="dropdown-menu">
             </ul>
@@ -139,9 +145,11 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <iframe 
+			<!-- <iframe width="420" height="315" src="https://www.youtube.com/embed/A6XUVjK9W4o" frameborder="0" ></iframe> -->
+      <iframe
+			 width="420" height="315"
         class="col-md-9"
-        src="https://gaming.youtube.com/watch?v=fSK9YgQxXS0?autoplay=1"
+        src="https://www.youtube.com/embed/A6XUVjK9W4o"
         frameborder="0"
         allowfullscreen
         id="youtubeFrame">
@@ -193,30 +201,35 @@
         if(chatOnLeft.is(":checked")){
           $("#twitchFrame").addClass("col-md-pull-" + stream);
         }
-      } else {
-      //  $("#twitchFrame").hide();
       }
       streamSize = stream;
       chatSize = chat;
     }
 
     function switchStream(streamId){
-      $("#youtubeFrame").attr('src', "https://www.youtube.com/embed/" + streamId + "?autoplay=1");
+		 	var res = streamId.split("=")
+			var test = res[res.length-1]
+			// $("#youtubeFrame").attr('src', "https://www.youtube.com/embed/" + test + "?autoplay=1");
+						$("#youtubeFrame").attr('src', "http://www.hitbox.tv/embed/taodota?popout=true&autoplay=true");
     }
     function switchChat(channel){
       $("#twitchFrame").attr('src', "http://www.twitch.tv/" + channel + "/chat");
     }
+		function addChatToList(channel){
+			$("#chatList").append("<li onclick=\"switchChat('" + channel + "')\"><a href='#'>" + channel + "</a></li>");
+			window.alert(channel + "was added to your favorites !")
+		}
     $(function(){
-      // optionsMenu.fadeTo(0,0);
-      // $("#navLogo").fadeTo(0, 0.1);
-      // $("#optionsContainer").mouseover(function(){
-      //   $("#navLogo").fadeTo(500,1);
-      //   optionsMenu.fadeTo(500, 1);
-      // })
-      // $("#optionsContainer").mouseleave(function(){
-      //   $("#navLogo").fadeTo(500, 0.1);
-      //   optionsMenu.fadeTo(500, 0);
-      // });
+      optionsMenu.fadeTo(0,0);
+      $("#navLogo").fadeTo(0, 0.1);
+      $("#optionsContainer").mouseover(function(){
+        $("#navLogo").fadeTo(500,1);
+        optionsMenu.fadeTo(500, 1);
+      })
+      $("#optionsContainer").mouseleave(function(){
+        $("#navLogo").fadeTo(500, 0.1);
+        optionsMenu.fadeTo(500, 0);
+      });
       chatOnLeft.change(function(){
         setRatio(streamSize, chatSize);
       });
@@ -229,6 +242,9 @@
       $("#custom-video-btn").click(function(){
         switchStream($("#custom-video-id").val());
       });
+			$("custom-add-chat-btn").click(function(){
+				addChatToList($("custom-add-chat-btn").val());
+			});
       $("#custom-chat-btn").click(function(){
 				switchChat($("#custom-chat-id").val());
       });
