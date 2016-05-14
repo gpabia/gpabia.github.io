@@ -206,15 +206,24 @@
       chatSize = chat;
     }
 
-    function switchStream(streamId){
-		 	var res = streamId.split("=")
-			var test = res[res.length-1]
-			// $("#youtubeFrame").attr('src', "https://www.youtube.com/embed/" + test + "?autoplay=1");
-						$("#youtubeFrame").attr('src', "http://www.hitbox.tv/embed/taodota?popout=true&autoplay=true");
-    }
-    function switchChat(channel){
-      $("#twitchFrame").attr('src', "http://www.twitch.tv/" + channel + "/chat");
-    }
+		function switchStream(streamId){
+			if(streamId.indexOf("youtube") > -1){
+				var res = streamId.split("=")
+				var test = res[res.length-1]
+				$("#youtubeFrame").attr('src', "https://www.youtube.com/embed/" + test + "?autoplay=1");
+			} else if (streamId.indexOf("hitbox") > -1) {
+				var res = streamId.split("/")
+				var test = res[res.length-1]
+				$("#youtubeFrame").attr('src', "http://www.hitbox.tv/embed/" + test + "?popout=true&autoplay=true");
+			} else if (streamId.indexOf("azubu") > -1){
+				var res = streamId.split("/")
+				var test = res[res.length-1]
+				$("#youtubeFrame").attr('src', "http://www.azubu.tv/embed/" + test);
+			}
+		}
+		function switchChat(channel){
+			$("#twitchFrame").attr('src', "http://www.twitch.tv/" + channel + "/chat");
+		}
 		function addChatToList(channel){
 			$("#chatList").append("<li onclick=\"switchChat('" + channel + "')\"><a href='#'>" + channel + "</a></li>");
 			window.alert(channel + "was added to your favorites !")
